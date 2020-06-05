@@ -1,6 +1,10 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
-
+class City:
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat
+    self.lon = lon
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -20,14 +24,25 @@ def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    
+  import csv
+  with open('cities.csv', newline='') as cities:
+    reader = csv.DictReader(cities)
+    a = list(reader)
+    print(a[0])
+    #loop through list of city dictionaries(a) and set city, lat, and lon
+    #how do i make them instances of city class after looping?
+    cities = [City(city['city'], city['lat'], city['lng']) for city in a]
+    print('You created this!!!', cities)
+    print(cities[0].name, cities[0].lat, cities[0].lon)
+    # cities = [City(i['city'], i['lat'], i['lng']) for i in citiess]
+    # print('new list:::', cities)
     return cities
 
 cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print(c)
+    print('this is c', c)
 
 # STRETCH GOAL!
 #
