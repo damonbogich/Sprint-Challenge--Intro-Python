@@ -1,6 +1,12 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
-
+class City:
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat
+    self.lon = lon
+  # def __str__(self):
+  #   return f'City({self.name}, {self.lat}, {self.lon})'
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -16,18 +22,32 @@
 # should not be loaded into a City object.
 cities = []
 
-def cityreader(cities=[]):
+def cityreader(cities=None):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    
+  import csv
+  with open('cities.csv', newline='') as places:
+    reader = csv.DictReader(places)
+    a = list(reader)
+    # print('a: ', a)
+    #loop through list of city dictionaries(a) and set city, lat, and lon
+    #how do i make them instances of city class after looping?
+    cities = [City(city['city'], float(city['lat']), float(city['lng'])) for city in a]
+    print('You created this!!!', cities)
+    print(cities[0].name, cities[0].lat, cities[0].lon)
+    # cities = [City(i['city'], i['lat'], i['lng']) for i in citiess]
+    # print('new list:::', cities)
     return cities
 
-cityreader(cities)
+cities += cityreader(cities)
+print('after function ran with empty list cities', cities)
+print('myCities var: ', cities)
+#list is coming back empyt........  shouldn't it be populated with all of the cities???
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print(c)
+    print(f'{c.name}, {c.lat}, {c.lon}')
 
 # STRETCH GOAL!
 #
